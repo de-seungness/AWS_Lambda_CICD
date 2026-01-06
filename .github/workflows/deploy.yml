@@ -36,7 +36,7 @@ jobs:
     - name: Package Lambda Function
       run: |
         cd lambda_function
-        python3.11 -m venv venv
+        python3 -m venv venv
         source venv/bin/activate
         mkdir package
         pip install --no-cache-dir -r requirements.txt -t ./package
@@ -64,7 +64,7 @@ jobs:
           echo "Creating Lambda function $FUNCTION_NAME..."
           aws lambda create-function \
             --function-name $FUNCTION_NAME \
-            --runtime python3.11 \
+            --runtime python3 \
             --role arn:aws:iam::424510830618:role/test_lambda_dev \
             --handler app.lambda_handler \
             --timeout 300 \
