@@ -57,19 +57,19 @@ jobs:
     #     zip -r ../../lambda.zip .
     #     cd ../..
 
-    - name: Package Lambda Function (Amazon Linux via Docker)
+    - name: Package Lambda Function (Amazon Linux build image)
       run: |
         docker run --rm \
           --entrypoint /bin/bash \
           -v "$PWD/lambda_function:/var/task" \
-          public.ecr.aws/lambda/python:3.11 \
+          public.ecr.aws/sam/build-python3.11 \
           -c "
+            pip install --upgrade pip &&
             pip install --no-cache-dir -r requirements.txt -t package &&
             cp app.py package/ &&
             cd package &&
             zip -r /var/task/lambda.zip .
           "
-
 
     - name: Deploy to AWS Lambda
       env:
