@@ -60,9 +60,10 @@ jobs:
     - name: Package Lambda Function (Amazon Linux via Docker)
       run: |
         docker run --rm \
+          --entrypoint /bin/bash \
           -v "$PWD/lambda_function:/var/task" \
           public.ecr.aws/lambda/python:3.11 \
-          /bin/bash -c "
+          -c "
             pip install --no-cache-dir -r requirements.txt -t package &&
             cp app.py package/ &&
             cd package &&
